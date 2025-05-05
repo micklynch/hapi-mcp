@@ -2,7 +2,7 @@
 
 I built a Model Context Protocol (MCP) server to query FHIR servers, designed to work with Cline or other MCP hosts. This project allows doctors to interact with a FHIR API using natural language.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/h1KOCCGPkuo" frameborder="0" allowfullscreen></iframe>
+[![Watch the video](https://img.youtube.com/vi/h1KOCCGPkuo/0.jpg)](https://www.youtube.com/watch?v=h1KOCCGPkuo)
 
 ## Project Overview
 
