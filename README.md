@@ -17,18 +17,18 @@ My goal was to create an MCP server that interfaces with a FHIR server to retrie
     ```
     (Replace `<repository_url>` and `<repository_directory>` with the actual GitHub repository details.)
 
-2.  **Install dependencies:**
+2.  **Create a Virtual Environment**
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+    This will create a virtual environment named `venv` and activate it. You should see `(venv)` in your terminal prompt, indicating the environment is active.
+
+3.  **Install dependencies:**
     Make sure you have Python installed. Then install the required libraries using pip and the `requirements.txt` file:
     ```bash
     pip install -r requirements.txt
     ```
-
-3.  **Run the MCP Server:**
-    Execute the Python script to start the server:
-    ```bash
-    python hapi-mcp-server.py
-    ```
-    The server will start and listen for connections from an MCP Host like Cline.
 
 ## Key Features
 
@@ -77,9 +77,9 @@ Add the following JSON object under the `"mcpServers"` key in your MCP settings 
 
 ```json
 "hapi-mcp-server": {
-  "command": "/home/mick/Documents/code/hapi_mcp/venv/bin/python",
+  "command": "/path/to/server/hapi_mcp/venv/bin/python",
   "args": [
-    "/home/mick/Documents/code/hapi_mcp/hapi-mcp-server.py"
+    "/path/to/server/hapi_mcp/hapi-mcp-server.py"
   ],
   "env": {
     "HAPI_MCP_SERVER_HOST": "https://hapi.fhir.org/baseR4"
