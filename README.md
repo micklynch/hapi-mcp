@@ -8,6 +8,28 @@ I built a Model Context Protocol (MCP) server to query FHIR servers, designed to
 
 My goal was to create an MCP server that interfaces with a FHIR server to retrieve patient data, medications, observations, and more. FHIR (Fast Healthcare Interoperability Resources) is a standard for healthcare data exchange, and my server makes it accessible through simple, developer-friendly tools. This allows Cline to perform complex queries, such as “list patients named John Smith over 55 on diphenhydramine,” directly within the development environment.
 
+## Installation
+
+1.  **Clone the repository:**
+    ```bash
+    git clone <repository_url>
+    cd <repository_directory>
+    ```
+    (Replace `<repository_url>` and `<repository_directory>` with the actual GitHub repository details.)
+
+2.  **Install dependencies:**
+    Make sure you have Python installed. Then install the required libraries using pip and the `requirements.txt` file:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+3.  **Run the MCP Server:**
+    Execute the Python script to start the server:
+    ```bash
+    python hapi-mcp-server.py
+    ```
+    The server will start and listen for connections from an MCP Host like Cline.
+
 ## Key Features
 
 The MCP server includes several healthcare-specific tools, each designed to streamline data retrieval:
@@ -46,6 +68,31 @@ This pattern is repeated for other tools, with each function targeting the appro
 ## Using the Server with Cline
 
 Once the MCP server is running, Cline can call its tools to execute healthcare queries. For example, a developer could instruct Cline to retrieve medication requests for a patient by ID or search for patients by name. Cline’s ability to incorporate context, such as file structures or diagnostic information, enhances its effectiveness in handling these tasks (Why I Use Cline). This integration empowers developers to build healthcare applications more efficiently, leveraging AI to manage data retrieval.
+
+## Architecture Diagram
+
+Here's a diagram illustrating the interaction between the User, MCP Host (Cline), MCP Server, and the FHIR API:
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant MCP_Host as MCP Host (Cline)
+    participant MCP_Server as MCP Server
+    participant FHIR_API as FHIR API
+
+    User->>MCP_Host: Natural Language Query
+    activate MCP_Host
+    MCP_Host->>MCP_Server: Tool Call (e.g., find_patient_by_name)
+    activate MCP_Server
+    MCP_Server->>FHIR_API: HTTP Request (e.g., GET /Patient)
+    activate FHIR_API
+    FHIR_API-->>MCP_Server: FHIR Data (JSON)
+    deactivate FHIR_API
+    MCP_Server-->>MCP_Host: Tool Result (JSON)
+    deactivate MCP_Server
+    MCP_Host-->>User: Processed Information
+    deactivate MCP_Host
+```
 
 ## Why This Matters
 
