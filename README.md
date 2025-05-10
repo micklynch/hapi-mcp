@@ -69,6 +69,29 @@ This pattern is repeated for other tools, with each function targeting the appro
 
 Once the MCP server is running, Cline can call its tools to execute healthcare queries. For example, a developer could instruct Cline to retrieve medication requests for a patient by ID or search for patients by name. Cline’s ability to incorporate context, such as file structures or diagnostic information, enhances its effectiveness in handling these tasks (Why I Use Cline). This integration empowers developers to build healthcare applications more efficiently, leveraging AI to manage data retrieval.
 
+## Adding the HAPI-MCP Server to MCP Hosts
+
+To use the `hapi-mcp-server` with Cline, Claude desktop, Copilot agent, or other MCP hosts, you need to add its configuration to your MCP settings file. The location of this file may vary depending on the specific MCP host you are using, but it is typically a JSON file containing server configurations.
+
+Add the following JSON object under the `"mcpServers"` key in your MCP settings file:
+
+```json
+"hapi-mcp-server": {
+  "command": "/home/mick/Documents/code/hapi_mcp/venv/bin/python",
+  "args": [
+    "/home/mick/Documents/code/hapi_mcp/hapi-mcp-server.py"
+  ],
+  "env": {
+    "HAPI_MCP_SERVER_HOST": "https://hapi.fhir.org/baseR4"
+  },
+  "description": "Returns a patient FHIR resources for a given patient ID"
+}
+```
+
+If the file or the `"mcpServers"` key does not exist, you may need to create them.
+
+After adding this configuration, restart your MCP host to load the new server. The `hapi-mcp-server` should then be available for use.
+
 ## Architecture Diagram
 
 Here's a diagram illustrating the interaction between the User, MCP Host (Cline), MCP Server, and the FHIR API:
@@ -94,10 +117,6 @@ sequenceDiagram
     deactivate MCP_Host
 ```
 
-## Why This Matters
-
-Healthcare data is notoriously complex, requiring specialized knowledge to access and utilize effectively. My MCP server bridges this gap by providing a simple interface for Cline to query FHIR servers. This not only saves development time but also enables the creation of applications that improve patient outcomes and streamline healthcare operations. By combining AI assistants like Cline with domain-specific tools, we can accelerate innovation in healthcare technology.
-
 ## Conclusion
 
-This project showcases the power of integrating AI coding assistants with specialized MCP servers to address domain-specific challenges. The source code is available on GitHub, and a video demonstrating the tool in action provides a closer look at its capabilities. By enabling seamless interaction with healthcare data, this MCP server paves the way for more efficient and impactful solutions in healthcare, empowering developers to make a meaningful difference in the industry.
+This project showcases integrating AI coding assistants with specialized MCP servers to address domain-specific challenges. The source code is available on GitHub, and a video demonstrating the tool in action provides a closer look at its capabilities. By enabling seamless interaction with healthcare data, this MCP server paves the way for more efficient and impactful solutions in healthcare, empowering developers to make a meaningful difference in the industry.

@@ -1,7 +1,11 @@
 from mcp.server.fastmcp import FastMCP
 import requests
+import os
 
-FHIR_SERVER_URL = "https://hapi.fhir.org/baseR4"
+FHIR_SERVER_URL = os.getenv("HAPI_MCP_SERVER_HOST")
+print(f"FHIR_SERVER_URL: {FHIR_SERVER_URL}")
+if not FHIR_SERVER_URL:
+    raise ValueError("FHIR_SERVER_URL environment variable is not set. Please set it to the HAPI FHIR server URL.")
 
 
 # Initialize the MCP server with a friendly name
