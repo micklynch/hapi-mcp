@@ -2,10 +2,13 @@ from mcp.server.fastmcp import FastMCP
 import requests
 import os
 
-FHIR_SERVER_URL = os.getenv("HAPI_MCP_SERVER_HOST")
-print(f"FHIR_SERVER_URL: {FHIR_SERVER_URL}")
-if not FHIR_SERVER_URL:
-    raise ValueError("FHIR_SERVER_URL environment variable is not set. Please set it to the HAPI FHIR server URL.")
+FHIR_SERVER_URL = os.getenv("HAPI_MCP_SERVER_HOST", "http://localhost:8080/fhir") # Added default value
+print(f"FHIR_SERVER_URL (using HAPI_MCP_SERVER_HOST env var, or default): {FHIR_SERVER_URL}")
+if not FHIR_SERVER_URL: # This check is now somewhat redundant if a default is always provided by getenv
+    # However, keeping it in case os.getenv behavior changes or default is explicitly None
+    print("Warning: FHIR_SERVER_URL is effectively not set (empty or None). Tool functionality will be affected.")
+    # Not raising an error to allow server to start for transport testing.
+    # raise ValueError("FHIR_SERVER_URL environment variable is not set. Please set it to the HAPI FHIR server URL.")
 
 
 # Initialize the MCP server with a friendly name
@@ -56,4 +59,4 @@ def find_patient_by_name(first_name: str, last_name: str) -> dict:
 
 
 if __name__ == "__main__":
-    mcp.run(transport="stdio")
+    mcp.run(transport="sse")
